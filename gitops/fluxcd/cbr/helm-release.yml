@@ -6,9 +6,11 @@ metadata:
   name: cbr-chart
   namespace: cbr
 spec:
-  install:
-    timeout: 3m
-  interval: 1m
+  upgrade:
+    remediation:
+      retries: -1
+
+  interval: 3m
   chart:
     spec:
       chart: gitops/charts/cbr-converter-chart
