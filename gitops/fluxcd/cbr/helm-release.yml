@@ -9,6 +9,10 @@ spec:
   upgrade:
     remediation:
       retries: -1
+  install:
+    remediation:
+      retries: 5
+
 
   interval: 3m
   chart:
