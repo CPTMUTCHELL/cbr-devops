@@ -1,13 +1,13 @@
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageUpdateAutomation
 metadata:
-  name: flux-system
+  name: image-update
   namespace: flux-system
 spec:
   interval: 1m0s
   sourceRef:
     kind: GitRepository
-    name: cbr-charts
+    name: git-charts
   git:
     checkout:
       ref:
@@ -20,7 +20,7 @@ spec:
     push:
       branch: master
   update:
-    path: ./gitops/charts/cbr-converter-chart
+    path: ./gitops/charts
     strategy: Setters
 
 

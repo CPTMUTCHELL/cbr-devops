@@ -1,0 +1,17 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: git-charts
+  namespace: flux-system
+spec:
+  secretRef:
+    name: flux-auth
+  interval: 1m
+  url: ssh://git@github.com/CPTMUTCHELL/cbr-devops
+  ref:
+    branch: master
+  ignore: |-
+    # exclude all
+    /*
+    # include charts directory
+    !/gitops/charts/
