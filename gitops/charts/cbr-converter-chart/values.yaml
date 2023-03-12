@@ -1,17 +1,16 @@
-
 deployments:
   - name: auth
     ns: cbr
     replicas: 1
     image: cptmutchell/auth-service
-    tag: v1 # {"$imagepolicy": "flux-system:podinfo"}
+    tag: cptmutchell/auth-service:20230312140911 # {"$imagepolicy": "flux-system:podinfo"}
     port: 8081
     secretEnvs:
       - envName: POSTGRES_PASSWORD
         name: postgres-secret
         key: POSTGRES_PASSWORD
     configMaps:
-      -  cbr-auth-cm
+      - cbr-auth-cm
     livenessProbe:
       httpGet:
         path: /backend/auth/health/livenessState
@@ -24,7 +23,6 @@ deployments:
         port: 8081
       initialDelaySeconds: 20
       periodSeconds: 40
-
   - name: convert
     ns: cbr
     replicas: 1
@@ -50,12 +48,11 @@ deployments:
         port: 8082
       initialDelaySeconds: 20
       periodSeconds: 40
-
   - name: history
     ns: cbr
     replicas: 1
     image: cptmutchell/history-service
-    tag: v1 # {"$imagepolicy": "flux-system:podinfo"}
+    tag: cptmutchell/auth-service:20230312140911 # {"$imagepolicy": "flux-system:podinfo"}
     port: 8083
     secretEnvs:
       - envName: POSTGRES_PASSWORD
@@ -76,7 +73,6 @@ deployments:
         port: 8083
       initialDelaySeconds: 20
       periodSeconds: 40
-
 jobs:
   - name: flyway-auth-db
     ns: cbr
@@ -89,12 +85,12 @@ jobs:
     envs:
       FLYWAY_USER: postgres
       FLYWAY_URL: jdbc:postgresql://cbr-db:5432/auth_db
-    #command: = echo "hello && echo "world" (example)
-     # - echo "hello"
-     # - echo "world"
+      #command: = echo "hello && echo "world" (example)
+    # - echo "hello"
+    # - echo "world"
+
     command:
       - flyway migrate
-
   - name: flyway-convert-db
     ns: cbr
     image: cptmutchell/flyway-convertdb
@@ -121,6 +117,3 @@ jobs:
       FLYWAY_URL: jdbc:postgresql://cbr-db:5432/history_db
     command:
       - flyway migrate
-
-
-
