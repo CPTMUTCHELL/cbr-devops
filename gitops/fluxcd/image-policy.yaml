@@ -8,4 +8,4 @@ spec:
     name: podinfo
   policy:
     semver:
-      range: v.x
+      range: 1.x.x

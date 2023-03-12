@@ -6,5 +6,3 @@ metadata:
 spec:
   image: cptmutchell/auth-service
   interval: 1m0s
-
----
