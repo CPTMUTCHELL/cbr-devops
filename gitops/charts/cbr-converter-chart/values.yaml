@@ -3,7 +3,7 @@ deployments:
     ns: cbr
     replicas: 1
     image: cptmutchell/auth-service
-    tag: cptmutchell/auth-service:20230312140911 # {"$imagepolicy": "flux-system:podinfo"}
+    tag: cptmutchell/auth-service:20230312193821 # {"$imagepolicy": "flux-system:podinfo"}
     port: 8081
     secretEnvs:
       - envName: POSTGRES_PASSWORD
@@ -52,7 +52,7 @@ deployments:
     ns: cbr
     replicas: 1
     image: cptmutchell/history-service
-    tag: cptmutchell/auth-service:20230312140911 # {"$imagepolicy": "flux-system:podinfo"}
+    tag: cptmutchell/auth-service:20230312193821 # {"$imagepolicy": "flux-system:podinfo"}
     port: 8083
     secretEnvs:
       - envName: POSTGRES_PASSWORD
