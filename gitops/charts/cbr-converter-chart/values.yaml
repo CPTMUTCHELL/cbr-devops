@@ -52,7 +52,7 @@ deployments:
     ns: cbr
     replicas: 1
     image: cptmutchell/history-service
-    tag: cptmutchell/auth-service:20230312193821 # {"$imagepolicy": "flux-system:history-image-policy"}
+    tag: cptmutchell/history-service:20230312195951 # {"$imagepolicy": "flux-system:history-image-policy"}
     port: 8083
     secretEnvs:
       - envName: POSTGRES_PASSWORD
