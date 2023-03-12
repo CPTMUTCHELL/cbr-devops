@@ -18,3 +18,47 @@ spec:
   policy:
     numerical:
       order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: convert-image
+  namespace: flux-system
+spec:
+  image: cptmutchell/convert-service
+  interval: 2m0s
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: convert-image-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: convert-image
+  policy:
+    numerical:
+      order: asc
+---
+
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: history-image
+  namespace: flux-system
+spec:
+  image: cptmutchell/history-service
+  interval: 2m0s
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: history-image-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: history-image
+  policy:
+    numerical:
+      order: asc
+---
