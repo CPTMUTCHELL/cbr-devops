@@ -8,4 +8,4 @@ spec:
     name: podinfo
   policy:
     numerical:
-      order: desc
+      order: asc
