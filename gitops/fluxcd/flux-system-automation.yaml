@@ -11,9 +11,16 @@ spec:
   git:
     checkout:
       ref:
-        branch: main
+        branch: master
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: fluxcdbot
+      messageTemplate: '{{range .Updated.Images}}{{println .}}{{end}}'
     push:
       branch: master
   update:
     path: ./gitops/charts/cbr-converter-chart
     strategy: Setters
+
+

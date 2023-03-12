@@ -1,11 +1,14 @@
+
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: GitRepository
 metadata:
   name: cbr-charts
-  namespace: cbr
+  namespace: flux-system
 spec:
+  secretRef:
+    name: flux-auth
   interval: 1m
-  url: https://github.com/CPTMUTCHELL/cbr-devops
+  url: ssh://git@github.com/CPTMUTCHELL/cbr-devops
   ref:
     branch: master
   ignore: |-
@@ -21,11 +24,14 @@ metadata:
   name: cbr-chart
   namespace: cbr
 spec:
+  install:
+    timeout: 3m
   interval: 1m
-  releaseName: angi-helloworld
   chart:
     spec:
       chart: gitops/charts/cbr-converter-chart
       sourceRef:
         kind: GitRepository
         name: cbr-charts
+        namespace: flux-system
+

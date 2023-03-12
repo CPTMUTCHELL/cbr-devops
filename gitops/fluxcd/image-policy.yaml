@@ -7,5 +7,5 @@ spec:
   imageRepositoryRef:
     name: podinfo
   policy:
-    semver:
-      range: 1.x.x
+    numerical:
+      order: desc
