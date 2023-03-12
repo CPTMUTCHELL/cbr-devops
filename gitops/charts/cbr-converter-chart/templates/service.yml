@@ -1,0 +1,23 @@
+{{- range $deployment := .Values.deployments -}}
+{{$typeExists :=  and (not (empty $deployment.service)) (not (empty $deployment.service.type))}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{$deployment.name}}-service
+  namespace: {{ $deployment.ns }}
+spec:
+  type: {{ if $typeExists }}{{ $deployment.service.type }}{{ else }}ClusterIP
+  {{- end}}
+  selector:
+    app: {{$deployment.name}}
+  ports:
+    - port: {{$deployment.port}}
+      targetPort: {{if not (empty $deployment.targetPort)}}{{$deployment.targetPort}}
+      {{- else}}{{$deployment.port}}
+      {{- end}}
+      protocol: TCP
+      {{- if (and ($typeExists) (and (eq $deployment.service.type "NodePort") (not (empty $deployment.service.nodePort)))) }}
+      nodePort: {{$deployment.service.nodePort}}
+      {{- end}}
+{{- end}}

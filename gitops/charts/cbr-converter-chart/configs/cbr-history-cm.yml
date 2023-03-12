@@ -1,0 +1,4 @@
+DB_HOST: "cbr-db"
+POSTGRES_USER: "postgres"
+POSTGRES_CONVERT_DB: "history_db"
+HISTORY_PORT: "8083"

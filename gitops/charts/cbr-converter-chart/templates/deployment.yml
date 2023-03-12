@@ -1,0 +1,22 @@
+{{- range $deployment := .Values.deployments -}}
+{{- with $ -}}
+{{$podData := dict "parent" $deployment }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $deployment.name }}-deployment
+  namespace: {{ $deployment.ns }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ $deployment.name }}
+  replicas: {{ $deployment.replicas }}
+  template:
+    metadata:
+      labels:
+        app: {{ $deployment.name }}
+    spec:
+      {{- include "pod" $podData | indent 6 }}
+{{- end }}
+{{ end }}

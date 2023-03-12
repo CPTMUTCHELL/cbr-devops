@@ -1,0 +1,19 @@
+{{- range $job := .Values.jobs -}}
+{{$podData := dict "parent" $job  }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  namespace: {{ $job.ns }}
+  name: {{$job.name}}-job
+spec:
+  template:
+    metadata:
+      labels:
+        app: {{ $job.name }}
+    spec:
+      restartPolicy: OnFailure{{ if $job.policy  }}{{$job.policy}}
+
+      {{ end }}
+      {{- include "pod" $podData | indent 6 }}
+      {{- end}}

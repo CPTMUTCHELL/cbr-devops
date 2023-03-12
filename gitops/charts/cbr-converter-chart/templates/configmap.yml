@@ -1,0 +1,12 @@
+{{ range $path, $_ :=  .Files.Glob  "configs/**"  }}
+{{$cm_name := (split "configs/" $path)._1 | replace ".yml" "" | replace ".yaml" "" }}
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ $cm_name }}
+  namespace: {{ (split "-" $cm_name)._0 }}
+data:
+{{ $.Files.Get $path | indent 2  }}
+{{end}}
+

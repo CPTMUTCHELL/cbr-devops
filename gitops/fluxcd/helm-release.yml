@@ -1,0 +1,31 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: cbr-charts
+  namespace: cbr
+spec:
+  interval: 1m
+  url: https://github.com/CPTMUTCHELL/cbr-devops
+  ref:
+    branch: master
+  ignore: |-
+    # exclude all
+    /*
+    # include charts directory
+    !/gitops/charts/
+---
+
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cbr-chart
+  namespace: cbr
+spec:
+  interval: 1m
+  releaseName: angi-helloworld
+  chart:
+    spec:
+      chart: gitops/charts/cbr-converter-chart
+      sourceRef:
+        kind: GitRepository
+        name: cbr-charts

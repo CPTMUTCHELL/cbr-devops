@@ -1,0 +1,126 @@
+
+deployments:
+  - name: auth
+    ns: cbr
+    replicas: 1
+    image: cptmutchell/auth-service
+    tag: v1 # {"$imagepolicy": "flux-system:podinfo"}
+    port: 8081
+    secretEnvs:
+      - envName: POSTGRES_PASSWORD
+        name: postgres-secret
+        key: POSTGRES_PASSWORD
+    configMaps:
+      -  cbr-auth-cm
+    livenessProbe:
+      httpGet:
+        path: /backend/auth/health/livenessState
+        port: 8081
+      initialDelaySeconds: 20
+      periodSeconds: 40
+    readinessProbe:
+      httpGet:
+        path: /backend/auth/health/readinessState
+        port: 8081
+      initialDelaySeconds: 20
+      periodSeconds: 40
+
+  - name: convert
+    ns: cbr
+    replicas: 1
+    image: cptmutchell/convert-service
+    tag: v1
+    port: 8082
+    secretEnvs:
+      - envName: POSTGRES_PASSWORD
+        name: postgres-secret
+        key: POSTGRES_PASSWORD
+    configMaps:
+      - cbr-convert-cm
+      - cbr-rabbit-cm
+    livenessProbe:
+      httpGet:
+        path: /backend/convert/health/livenessState
+        port: 8082
+      initialDelaySeconds: 20
+      periodSeconds: 40
+    readinessProbe:
+      httpGet:
+        path: /backend/convert/health/readinessState
+        port: 8082
+      initialDelaySeconds: 20
+      periodSeconds: 40
+
+  - name: history
+    ns: cbr
+    replicas: 1
+    image: cptmutchell/history-service
+    tag: v1 # {"$imagepolicy": "flux-system:podinfo"}
+    port: 8083
+    secretEnvs:
+      - envName: POSTGRES_PASSWORD
+        name: postgres-secret
+        key: POSTGRES_PASSWORD
+    configMaps:
+      - cbr-history-cm
+      - cbr-rabbit-cm
+    livenessProbe:
+      httpGet:
+        path: /backend/history/health/livenessState
+        port: 8083
+      initialDelaySeconds: 20
+      periodSeconds: 40
+    readinessProbe:
+      httpGet:
+        path: /backend/history/health/readinessState
+        port: 8083
+      initialDelaySeconds: 20
+      periodSeconds: 40
+
+jobs:
+  - name: flyway-auth-db
+    ns: cbr
+    image: cptmutchell/flyway-authdb
+    tag: v1
+    secretEnvs:
+      - envName: FLYWAY_PASSWORD
+        name: postgres-secret
+        key: POSTGRES_PASSWORD
+    envs:
+      FLYWAY_USER: postgres
+      FLYWAY_URL: jdbc:postgresql://cbr-db:5432/auth_db
+    #command: = echo "hello && echo "world" (example)
+     # - echo "hello"
+     # - echo "world"
+    command:
+      - flyway migrate
+
+  - name: flyway-convert-db
+    ns: cbr
+    image: cptmutchell/flyway-convertdb
+    tag: v1
+    secretEnvs:
+      - envName: FLYWAY_PASSWORD
+        name: postgres-secret
+        key: POSTGRES_PASSWORD
+    envs:
+      FLYWAY_USER: postgres
+      FLYWAY_URL: jdbc:postgresql://cbr-db:5432/convert_db
+    command:
+      - flyway migrate
+  - name: flyway-history-db
+    ns: cbr
+    image: cptmutchell/flyway-historydb
+    tag: v1
+    secretEnvs:
+      - envName: FLYWAY_PASSWORD
+        name: postgres-secret
+        key: POSTGRES_PASSWORD
+    envs:
+      FLYWAY_USER: postgres
+      FLYWAY_URL: jdbc:postgresql://cbr-db:5432/history_db
+    command:
+      - flyway migrate
+
+
+

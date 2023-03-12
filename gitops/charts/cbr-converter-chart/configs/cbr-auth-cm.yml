@@ -1,0 +1,14 @@
+
+JWT_SECRET: secret
+JWT_AUTH_TOKEN_EXPIRE: "1200000"
+JWT_REFRESH_TOKEN_EXPIRE: "36000000"
+DB_HOST: cbr-db
+AUTH_PORT: "8081"
+VERIFICATION_LINK: https://cbr.cptmutchell.xyz/?token=
+VERIFICATION_LINK_EXPIRATION: "1440"  #in minutes
+# Or use Secret
+GMAIL_USERNAME: cbrconverter@gmail.com
+GMAIL_PASSWORD: rqhylbwsgkenzevl
+
+POSTGRES_USER: postgres
+POSTGRES_AUTH_DB: auth_db

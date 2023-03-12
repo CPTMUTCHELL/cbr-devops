@@ -1,0 +1,8 @@
+RABBITMQ_ENABLE: "false"
+RABBITMQ_HOST: 'rabbit-rabbitmq.rabbitmq'
+RABBITMQ_PORT: '5672'
+RABBITMQ_USERNAME: 'cbr'
+RABBITMQ_PASSWORD: 'cbr'
+RABBITMQ_EXCHANGE: 'historyExc'
+RABBITMQ_QUEUE: 'cbr_queue'
+RABBITMQ_ROUTING_KEY: 'history.dto'
