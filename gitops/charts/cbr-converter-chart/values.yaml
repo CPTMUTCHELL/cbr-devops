@@ -84,7 +84,7 @@ jobs:
         key: POSTGRES_PASSWORD
     envs:
       FLYWAY_USER: postgres
-      FLYWAY_URL: jdbc:postgresql://cbr-db:5432/auth_db
+      FLYWAY_URL: jdbc:postgresql://cbr-db.postgres:5432/auth_db
       #command: = echo "hello && echo "world" (example)
     # - echo "hello"
     # - echo "world"
@@ -101,7 +101,7 @@ jobs:
         key: POSTGRES_PASSWORD
     envs:
       FLYWAY_USER: postgres
-      FLYWAY_URL: jdbc:postgresql://cbr-db:5432/convert_db
+      FLYWAY_URL: jdbc:postgresql://cbr-db.postgres:5432/convert_db
     command:
       - flyway migrate
   - name: flyway-history-db
@@ -114,6 +114,6 @@ jobs:
         key: POSTGRES_PASSWORD
     envs:
       FLYWAY_USER: postgres
-      FLYWAY_URL: jdbc:postgresql://cbr-db:5432/history_db
+      FLYWAY_URL: jdbc:postgresql://cbr-db.postgres:5432/history_db
     command:
       - flyway migrate
