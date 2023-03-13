@@ -1,4 +1,4 @@
-DB_HOST: "cbr-db"
+DB_HOST: "cbr-db.postgres"
 POSTGRES_USER: "postgres"
 POSTGRES_CONVERT_DB: "convert_db"
 HISTORY_URL: "http://history-service:8083"
