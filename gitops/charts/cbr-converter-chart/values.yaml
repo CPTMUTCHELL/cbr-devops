@@ -23,7 +23,7 @@ deployments:
         port: 8081
       initialDelaySeconds: 20
       periodSeconds: 40
-  - name: convert
+  - name: conver
     ns: cbr
     replicas: 1
     image: cptmutchell/convert-service
