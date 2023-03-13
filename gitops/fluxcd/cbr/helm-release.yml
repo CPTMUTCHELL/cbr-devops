@@ -13,6 +13,7 @@ spec:
   interval: 3m
   chart:
     spec:
+      reconcileStrategy: Revision
       chart: gitops/charts/cbr-converter-chart
       sourceRef:
         kind: GitRepository
