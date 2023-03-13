@@ -23,10 +23,7 @@ deployments:
         port: 8081
       initialDelaySeconds: 20
       periodSeconds: 40
-    ingress:
-      dns: cbr.cptmutchell.xyz
-      prefix: /backend/auth
-  - name: convert
+  - name: conver
     ns: cbr
     replicas: 1
     image: cptmutchell/convert-service
@@ -51,9 +48,6 @@ deployments:
         port: 8082
       initialDelaySeconds: 20
       periodSeconds: 40
-    ingress:
-      dns: cbr.cptmutchell.xyz
-      prefix: /backend/convert
   - name: history
     ns: cbr
     replicas: 1
@@ -79,9 +73,6 @@ deployments:
         port: 8083
       initialDelaySeconds: 20
       periodSeconds: 40
-    ingress:
-      dns: cbr.cptmutchell.xyz
-      prefix: /backend/history
 jobs:
   - name: flyway-auth-db
     ns: cbr
