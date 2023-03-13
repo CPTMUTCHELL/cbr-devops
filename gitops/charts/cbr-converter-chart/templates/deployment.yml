@@ -16,6 +16,8 @@ spec:
     metadata:
       labels:
         app: {{ $deployment.name }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configs/cbr-auth-cm.yml") . | sha256sum }}
     spec:
       {{- include "pod" $podData | indent 6 }}
 {{- end }}

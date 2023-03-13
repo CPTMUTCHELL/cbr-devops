@@ -1,0 +1,42 @@
+{{- range $deployment := .Values.deployments -}}
+{{ if  $deployment.ingress}}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $deployment.name }}-tls
+  namespace: {{ $deployment.ns }}
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`{{ $deployment.ingress.dns }}`) && PathPrefix(`{{ $deployment.ingress.prefix }}`)
+      kind: Rule
+      services:
+        - name: {{ $deployment.name }}-service
+          port: {{ $deployment.port }}
+          namespace: {{ $deployment.ns }}
+  tls:
+    certResolver: le
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $deployment.name }}-notls
+  namespace: {{ $deployment.ns }}
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`{{ $deployment.ingress.dns }}`) && PathPrefix(`{{ $deployment.ingress.prefix }}`)
+      kind: Rule
+      middlewares:
+        - name: test-redirectscheme
+      services:
+        - name: {{ $deployment.name }}-service
+          port: {{ $deployment.port }}
+          namespace: {{ $deployment.ns }}
+
+
+{{- end }}
+{{- end }}
