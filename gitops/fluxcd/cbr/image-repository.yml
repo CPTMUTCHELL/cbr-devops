@@ -15,6 +15,9 @@ metadata:
 spec:
   imageRepositoryRef:
     name: auth-image
+  filterTags:
+    pattern: '^master-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'
   policy:
     numerical:
       order: asc
@@ -36,6 +39,9 @@ metadata:
 spec:
   imageRepositoryRef:
     name: convert-image
+  filterTags:
+    pattern: '^master-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'
   policy:
     numerical:
       order: asc
@@ -58,6 +64,33 @@ metadata:
 spec:
   imageRepositoryRef:
     name: history-image
+  filterTags:
+    pattern: '^master-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: ui-image
+  namespace: flux-system
+spec:
+  image: cptmutchell/cbr-ui
+  interval: 2m0s
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: ui-image-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: ui-image
+  filterTags:
+    pattern: '^master-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'
   policy:
     numerical:
       order: asc
