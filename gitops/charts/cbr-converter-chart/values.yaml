@@ -3,7 +3,7 @@ deployments:
     ns: cbr
     replicas: 1
     image: cptmutchell/auth-service
-    tag: "20230312193821" # {"$imagepolicy": "flux-system:auth-image-policy:tag"}
+    tag: "master-108200e2-20230317123721" # {"$imagepolicy": "flux-system:auth-image-policy:tag"}
     port: 8081
     secretEnvs:
       - envName: POSTGRES_PASSWORD
@@ -30,7 +30,7 @@ deployments:
     ns: cbr
     replicas: 1
     image: cptmutchell/convert-service
-    tag: "20230312200114" # {"$imagepolicy": "flux-system:convert-image-policy:tag"}
+    tag: "master-108200e2-20230317123721" # {"$imagepolicy": "flux-system:convert-image-policy:tag"}
     port: 8082
     secretEnvs:
       - envName: POSTGRES_PASSWORD
@@ -58,7 +58,7 @@ deployments:
     ns: cbr
     replicas: 1
     image: cptmutchell/history-service
-    tag: "20230312195951" # {"$imagepolicy": "flux-system:history-image-policy:tag"}
+    tag: "master-108200e2-20230317123721" # {"$imagepolicy": "flux-system:history-image-policy:tag"}
     port: 8083
     secretEnvs:
       - envName: POSTGRES_PASSWORD
