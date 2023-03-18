@@ -1,0 +1,33 @@
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1
+rollingUpdate:
+  maxUnavailable: 0
+ports:
+  traefik:
+    expose: false
+    exposedPort: 9000
+    port: 9000
+    protocol: TCP
+  web:
+    expose: true
+    exposedPort: 80
+    port: 8000
+    protocol: TCP
+
+globalArguments: [] # Disable anonymous stat
+
+pilot:
+  dashboard: true
+ingressRoute:
+  dashboard:
+    enabled: true
+    labels:
+
+
+ingressClass:
+  enabled: true
+  isDefaultClass: true
+logs:
+  general:
+    level: DEBUG

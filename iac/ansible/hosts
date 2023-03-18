@@ -1,0 +1,5 @@
+
+[k8s_cluster]
+k8s-cluster-instance ansible_host=35.228.166.18 ansible_ssh_private_key_file=/Users/cptmutchell/.ssh/id_rsa_gcloud ansible_user=gcloudtest029
+[jenkins]
+jenkins-instance ansible_host=34.88.200.223 ansible_ssh_private_key_file=/Users/cptmutchell/.ssh/id_rsa_gcloud_jenkins ansible_user=gcloudtest029

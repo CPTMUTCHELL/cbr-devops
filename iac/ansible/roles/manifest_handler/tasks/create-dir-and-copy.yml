@@ -1,0 +1,11 @@
+- name: Create dir for manifests
+  file:
+    path: "{{manifestCopyFolder}}"
+    state: directory
+
+- name: Copy templates
+  template:
+    dest: "{{manifestCopyFolder}}"
+    src: "{{item}}"
+  with_items:
+    - "{{manifests}}"

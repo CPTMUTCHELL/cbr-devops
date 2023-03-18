@@ -1,0 +1,16 @@
+- name: Start role
+  hosts: jenkins
+  become: yes
+  become_user: root
+
+  environment:
+
+    JENKINS_USER: "{{ lookup('env', 'JENKINS_USER') }}"
+    JENKINS_PASS: "{{ lookup('env', 'JENKINS_PASS') }}"
+    GITHUB_USER: "{{ lookup('env', 'GITHUB_USER') }}"
+    GITHUB_PASS: "{{ lookup('env', 'GITHUB_PASS') }}"
+    DOCKERHUB_USER: "{{ lookup('env', 'DOCKERHUB_USER') }}"
+    DOCKERHUB_PASS: "{{ lookup('env', 'DOCKERHUB_PASS') }}"
+
+  roles:
+    - jenkins_setup

@@ -1,0 +1,36 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-exposed-dashboard
+  namespace: traefik
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: "( Host(`{{dns}}`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`) ))"
+      middlewares:
+        - name: admin-basic-auth
+          namespace: traefik
+      services:
+        - kind: TraefikService
+          name: api@internal
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: admin-basic-auth
+  namespace: traefik
+data:
+  users: |
+    YWRtaW46JGFwcjEkUWZKMzMzOUwkdGFGeE5od1EuMGlQSWZQcUVYWnBEMAoK
+#admin:admin
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: admin-basic-auth
+  namespace: traefik
+spec:
+  basicAuth:
+    secret: admin-basic-auth

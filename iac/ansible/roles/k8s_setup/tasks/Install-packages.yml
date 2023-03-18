@@ -1,0 +1,12 @@
+# For manifest_handler role
+- name: Install pip
+  apt:
+    update_cache: yes
+
+    pkg:
+      - python3-pip
+- name: Install kubernetes for module
+  pip:
+    name: kubernetes
+
+

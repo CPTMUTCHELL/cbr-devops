@@ -1,0 +1,8 @@
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: metallb-address-pool
+  namespace: metallb-system
+spec:
+  addresses:
+   - "{{ansible_host}}/32"

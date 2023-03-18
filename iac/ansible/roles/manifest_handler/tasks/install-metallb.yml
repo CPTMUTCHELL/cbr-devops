@@ -1,0 +1,36 @@
+
+- name: add metallb
+  kubernetes.core.helm_repository:
+    name: metallb
+    repo_url: "https://metallb.github.io/metallb"
+
+- name: install metallb
+  kubernetes.core.helm:
+    kubeconfig: "{{home}}/.kube/config"
+    name: metallb
+    chart_ref: metallb/metallb
+    release_namespace: metallb-system
+    create_namespace: true
+
+    # since 0.13 CM (metallb-values.yml.j2) doesn't work, need to use CRD
+#    values_files:
+#      - "{{manifestCopyFolder}}/metallb-values.yml.j2"
+- name: Wait until mwrtallb is up
+  kubernetes.core.k8s_info:
+    kubeconfig: "{{home}}/.kube/config"
+    api_version: v1
+    kind: Pod
+    namespace: metallb-system
+    wait: yes
+    wait_sleep: 15
+    wait_timeout: 60
+  register: pod_list
+  until: pod_list|json_query('resources[*].status.phase')|unique == ["Running"]
+
+- debug: var=pod_list
+
+- name: apply crd
+  k8s:
+    kubeconfig: "{{home}}/.kube/config"
+    state: present
+    src: "{{manifestCopyFolder}}/metallb-crd.yml.j2"

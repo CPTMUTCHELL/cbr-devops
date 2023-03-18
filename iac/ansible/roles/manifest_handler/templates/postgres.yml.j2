@@ -1,0 +1,38 @@
+auth:
+  enablePostgresUser: true
+  # set password for "postgres" user
+  existingSecret: postgres-secret
+  secretKeys:
+    adminPasswordKey: PGPASSWORD
+
+#service name
+fullnameOverride: "cbr-db"
+
+primary:
+  persistence:
+    size: 100Mi
+  # to run psql without -U
+  extraEnvVars:
+     - name: PGUSER
+       value: "postgres"
+     - name: DBS
+       value: "auth_db, convert_db, history_db"
+
+
+  # sets password for psql command
+  extraEnvVarsSecret: postgres-secret
+  initdb:
+
+    scripts:
+      create-multiple-databases.sh: |
+          #!/bin/sh
+          t=$(printenv DBS)
+          dbs=($(echo "$t" | tr ',' '\n'))
+        
+          for db in ${dbs[@]};
+          do
+          echo $db
+          psql --host 127.0.0.1 -tc "SELECT 1 FROM pg_database WHERE datname = '$db'" | grep -q 1 || psql -c "CREATE DATABASE $db"
+          done
+        
+        

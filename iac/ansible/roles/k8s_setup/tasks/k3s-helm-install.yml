@@ -1,0 +1,39 @@
+- name: check if k3s installed
+  stat:
+    path: "{{home}}/.kube/config"
+  register: node_status
+- name: check if helm installed
+  stat:
+    path: /usr/local/bin/helm
+  register: helm_status
+
+
+- name: Install k3s
+  include_role:
+    name: xanmanning.k3s
+  when: node_status.stat.exists==False
+
+- name: Install helm
+  include_role:
+    name: gantsign.helm
+  when: helm_status.stat.exists==False
+
+
+- name: Create .kube
+  file:
+    state: directory
+    path: "{{home}}/.kube"
+
+- name: Check if k3s.yaml exists
+  stat:
+    path: /etc/rancher/k3s/k3s.yaml
+  register: k3s_yaml
+- name: Move k3s.yaml
+  copy:
+    remote_src: yes
+    src: /etc/rancher/k3s/k3s.yaml
+    dest:  "{{home}}/.kube/config"
+    mode: 0600
+  when: k3s_yaml.stat.exists==True
+
+

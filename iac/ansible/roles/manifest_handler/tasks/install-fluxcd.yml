@@ -1,0 +1,37 @@
+- name: install flux
+  shell: curl -s https://fluxcd.io/install.sh | sudo bash
+- name: bootstrap flux
+  shell:
+    |
+    GITHUB_TOKEN={{github_token}} flux bootstrap github \
+    --owner={{github_user}} \
+    --repository={{github_repo}} \
+    --branch={{github_branch}} \
+    --path={{github_flux_path}} \
+    --read-write-key \
+    --components-extra=image-reflector-controller,image-automation-controller \
+    --kubeconfig={{kubeconfigPath}}
+
+- name: create ssh-secret
+  shell:
+    |
+    flux create secret git flux-auth2 \
+    --url=ssh://git@github.com/{{github_user}}/{{github_repo}} \
+    --ssh-key-algorithm=ecdsa \
+    --ssh-ecdsa-curve=p521 \
+    --kubeconfig={{kubeconfigPath}}
+  register: key
+
+- name: add ssh key to github
+  uri:
+    url: "https://api.github.com/repos/{{github_user}}/{{github_repo}}/keys"
+    method: POST
+    body:
+      title: fluxcd-gcp-key
+      read_only: false
+      key: "{{key.stderr_lines[0] | split ('✚ deploy key:') | last | trim}}"
+    body_format: json
+    status_code: [ 201, 422 ]
+    headers:
+      Accept: application/vnd.github+json
+      Authorization: "token {{github_token}}"

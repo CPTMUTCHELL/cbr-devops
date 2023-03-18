@@ -1,0 +1,37 @@
+
+- name: create dirs
+  file:
+    path: "{{home}}/{{item}}"
+    state: directory
+  with_items:
+    - jenkins
+    - jenkins/files
+
+- name: chmod for volume
+  file:
+    path: "{{home}}/jenkins/files"
+    state: directory
+    mode: 0667
+
+- name: copy files
+  copy:
+    dest: "{{home}}/jenkins"
+    src: "{{item}}"
+  with_items:
+    - Dockerfile
+    - jenkins-casc.yaml
+    - plugins.txt
+    - docker-compose.yml
+
+
+
+
+- name: docker-compose up --build
+  community.docker.docker_compose:
+    project_src: "{{home}}/jenkins"
+    build: yes
+  register: output
+- ansible.builtin.debug:
+    var: output
+
+

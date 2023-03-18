@@ -1,0 +1,72 @@
+
+extraConfiguration: |-
+  load_definitions = /app/load_definition.json
+  management.path_prefix = {{rabbit['prefix']}}
+
+
+loadDefinition:
+  enabled: true
+  file: "/app/load_definition.json"
+  existingSecret: load-definition
+
+extraSecrets:
+  load-definition:
+    load_definition.json: |
+      {
+
+        "users": [
+          {
+            "name": "{{rabbit['username']}}",
+            "password_hash": "{{hash_rabbit.stdout}}",
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "tags": [
+              "administrator"
+            ]
+          }
+        ],
+        "vhosts": [
+          {
+            "name": "{{rabbit['vhost']}}"
+          }
+        ],
+        "permissions": [
+          {
+            "user": "{{rabbit['username']}}",
+            "vhost": "{{rabbit['vhost']}}",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+          }
+        ],
+        "queues": [
+          {
+            "name": "{{rabbit['queue_name']}}",
+            "vhost": "{{rabbit['vhost']}}",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+              "x-queue-type": "classic"
+            }
+          }
+        ],
+        "exchanges": [
+          {
+            "name": "{{rabbit['exchanger_name']}}",
+            "vhost": "{{rabbit['vhost']}}",
+            "type": "topic",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false
+          }
+
+        ],
+        "bindings": [
+          {
+            "source": "{{rabbit['exchanger_name']}}",
+            "vhost": "{{rabbit['vhost']}}",
+            "destination": "{{rabbit['queue_name']}}",
+            "destination_type": "queue",
+            "routing_key": "{{rabbit['binding_key']}}"
+          }
+        ]
+      }

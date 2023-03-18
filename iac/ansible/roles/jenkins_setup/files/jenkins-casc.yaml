@@ -1,0 +1,71 @@
+jenkins:
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: ${JENKINS_USER}
+          password: ${JENKINS_PASS}
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+  numExecutors: 1
+jobs:
+  - script: >
+      pipelineJob('cbr-currency-converter') {
+      definition {
+              cpsScm {
+                  scm {
+
+                      git{
+                      remote {
+                         url 'https://github.com/CPTMUTCHELL/cbr-currency-converter.git'
+                        credentials 'github_id'
+
+                        }
+                        extensions {}
+                      }
+                  }
+              }
+          }
+
+        triggers {
+          githubPush()
+        }
+      }
+  - script: >
+      pipelineJob('cbr-currency-converter-ui') {
+          definition {
+                  cpsScm {
+                      scm {
+                          git{
+                          remote {
+                             url 'https://github.com/CPTMUTCHELL/cbr-currency-converter-ui.git'
+                            credentials 'github_id'
+
+                            }
+                            extensions {}
+                          }
+                      }
+                  }
+              }
+
+            triggers {
+              githubPush()
+            }
+          }
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+          - usernamePassword:
+              description: "github cred"
+              id: "github_id"
+              password: ${GITHUB_PASS}
+              scope: GLOBAL
+              username: ${GITHUB_USER}
+          - usernamePassword:
+              description: "dockerhub cred"
+              id: "dockerhub_id"
+              password: ${DOCKERHUB_PASS}
+              scope: GLOBAL
+              username: ${DOCKERHUB_USER}

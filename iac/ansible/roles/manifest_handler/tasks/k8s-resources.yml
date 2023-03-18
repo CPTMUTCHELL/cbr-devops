@@ -1,0 +1,12 @@
+
+
+- name: Create namespace
+  k8s:
+    kubeconfig: "{{home}}/.kube/config"
+    state: present
+    src: "{{manifestCopyFolder}}/{{item}}"
+  with_items:
+    - Namespace.yml.j2
+
+
+

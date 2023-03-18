@@ -1,0 +1,34 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-rabbitmq
+  namespace: {{rabbit.ns}}
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: "( Host(`{{dns}}`) && (PathPrefix(`{{rabbit['prefix']}}`) ))"
+      services:
+      - name: rabbit-rabbitmq
+        port: 15672
+        namespace: {{rabbit.ns}}
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-rabbitmq-tls
+  namespace: {{rabbit.ns}}
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: "( Host(`{{dns}}`) && (PathPrefix(`{{rabbit['prefix']}}`) ))"
+      services:
+        - name: rabbit-rabbitmq
+          port: 15672
+          namespace: {{rabbit.ns}}
+  tls:
+    certResolver: le
