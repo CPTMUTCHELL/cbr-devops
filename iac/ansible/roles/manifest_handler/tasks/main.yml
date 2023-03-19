@@ -1,7 +1,7 @@
-#- include_tasks: create-dir-and-copy.yml
-#- include_tasks: k8s-resources.yml
-#- include_tasks: install-postgres.yml
-#- include_tasks: install-metallb.yml
-#- include_tasks: install-traefik.yml
-#- include_tasks: install-rabbit.yml
+- include_tasks: create-dir-and-copy.yml
+- include_tasks: k8s-resources.yml
+- include_tasks: install-postgres.yml
+- include_tasks: install-metallb.yml
+- include_tasks: install-traefik.yml
+- include_tasks: install-rabbit.yml
 - include_tasks: install-fluxcd.yml
