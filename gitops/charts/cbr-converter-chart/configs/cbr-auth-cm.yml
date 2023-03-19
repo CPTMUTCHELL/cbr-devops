@@ -11,4 +11,3 @@ GMAIL_USERNAME: cbrconverter@gmail.com
 GMAIL_PASSWORD: rqhylbwsgkenzevl
 POSTGRES_USER: postgres
 POSTGRES_AUTH_DB: auth_db
-HELO: test
