@@ -13,7 +13,7 @@ deployments:
       - cbr-auth-cm
     livenessProbe:
       httpGet:
-        path: /backend/auth/health/liveness
+        path: /backend/auth/health/livenessState
         port: 8081
       initialDelaySeconds: 20
       periodSeconds: 40

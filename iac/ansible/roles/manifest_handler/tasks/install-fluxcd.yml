@@ -15,7 +15,7 @@
 - name: create ssh-secret
   shell:
     |
-    flux create secret git flux-auth2 \
+    flux create secret git flux-auth \
     --url=ssh://git@github.com/{{github_user}}/{{github_repo}} \
     --ssh-key-algorithm=ecdsa \
     --ssh-ecdsa-curve=p521 \
