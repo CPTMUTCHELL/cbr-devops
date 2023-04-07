@@ -7,6 +7,6 @@
     k3s_become: true
   roles:
     - k8s_setup
-#    - manifest_handler
+    - manifest_handler
 
 
