@@ -1,0 +1,4 @@
+kubelet-arg:
+  - "kube-reserved=cpu=100m,memory=250Mi,ephemeral-storage=1Gi"
+  - "system-reserved=cpu=100m, memory=500Mi,ephemeral-storage=1Gi"
+  - "eviction-hard=memory.available<300Mi,nodefs.available<10%"

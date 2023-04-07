@@ -36,4 +36,18 @@
     mode: 0600
   when: k3s_yaml.stat.exists==True
 
+#https://kubernetes.io/docs/tasks/administer-cluster/reserve-compute-resources/
+#https://devops.stackexchange.com/questions/16070/where-does-k3s-store-its-var-lib-kubelet-config-yaml-file
+- name: set reserve for node
+  copy:
+    src: config.yaml
+    dest: /etc/rancher/k3s/config.yaml
+
+- name: restart node
+  systemd:
+    state: restarted
+    daemon_reload: true
+    name: k3s
+
+
 
