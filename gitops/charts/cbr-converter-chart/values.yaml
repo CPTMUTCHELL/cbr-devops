@@ -13,13 +13,13 @@ deployments:
       - cbr-auth-cm
     livenessProbe:
       httpGet:
-        path: /backend/auth/health/livenessState
+        path: /backend/auth/actuator/health/livenessState
         port: 8081
       initialDelaySeconds: 20
       periodSeconds: 40
     readinessProbe:
       httpGet:
-        path: /backend/auth/health/readinessState
+        path: /backend/auth/actuator/health/readinessState
         port: 8081
       initialDelaySeconds: 20
       periodSeconds: 40
@@ -41,13 +41,13 @@ deployments:
       - cbr-rabbit-cm
     livenessProbe:
       httpGet:
-        path: /backend/convert/health/livenessState
+        path: /backend/convert/actuator/health/livenessState
         port: 8082
       initialDelaySeconds: 20
       periodSeconds: 40
     readinessProbe:
       httpGet:
-        path: /backend/convert/health/readinessState
+        path: /backend/convert/actuator/health/readinessState
         port: 8082
       initialDelaySeconds: 20
       periodSeconds: 40
@@ -69,13 +69,13 @@ deployments:
       - cbr-rabbit-cm
     livenessProbe:
       httpGet:
-        path: /backend/history/health/livenessState
+        path: /backend/history/actuator/health/livenessState
         port: 8083
       initialDelaySeconds: 20
       periodSeconds: 40
     readinessProbe:
       httpGet:
-        path: /backend/history/health/readinessState
+        path: /backend/history/actuator/health/readinessState
         port: 8083
       initialDelaySeconds: 20
       periodSeconds: 40
