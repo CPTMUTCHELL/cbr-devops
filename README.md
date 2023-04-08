@@ -1,4 +1,4 @@
-# cbr-devops
+# devops
 
 The old version of CI/CD and IAC is available [here](https://github.com/CPTMUTCHELL/cbr-currency-converter/tree/old-ci/cd)
 

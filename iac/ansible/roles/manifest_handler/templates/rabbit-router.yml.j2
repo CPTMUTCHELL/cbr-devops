@@ -8,7 +8,7 @@ spec:
     - web
   routes:
     - kind: Rule
-      match: "( Host(`{{dns}}`) && (PathPrefix(`{{rabbit['prefix']}}`) ))"
+      match: "( Host(`{{domain}}`) && (PathPrefix(`{{rabbit['prefix']}}`) ))"
       services:
       - name: rabbit-rabbitmq
         port: 15672
@@ -25,7 +25,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: "( Host(`{{dns}}`) && (PathPrefix(`{{rabbit['prefix']}}`) ))"
+      match: "( Host(`{{domain}}`) && (PathPrefix(`{{rabbit['prefix']}}`) ))"
       services:
         - name: rabbit-rabbitmq
           port: 15672

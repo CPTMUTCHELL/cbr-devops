@@ -8,13 +8,33 @@ spec:
     - web
   routes:
     - kind: Rule
-      match: "( Host(`{{dns}}`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`) ))"
+      match: "( Host(`{{domain}}`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`) ))"
       middlewares:
         - name: admin-basic-auth
           namespace: traefik
       services:
         - kind: TraefikService
           name: api@internal
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-exposed-dashboard-tls
+  namespace: traefik
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: "( Host(`{{domain}}`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`) ))"
+      middlewares:
+        - name: admin-basic-auth
+          namespace: traefik
+      services:
+        - kind: TraefikService
+          name: api@internal
+  tls:
+    certResolver: le
 ---
 apiVersion: v1
 kind: Secret

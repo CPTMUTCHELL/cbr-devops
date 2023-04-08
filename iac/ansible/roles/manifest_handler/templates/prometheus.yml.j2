@@ -1,0 +1,21 @@
+alertmanager:
+  ingress:
+    enabled: false # I use Ingress route
+
+grafana:
+  # taken from https://github.com/grafana/helm-charts/tree/main/charts/grafana
+  admin:
+    existingSecret: prometheus-secret
+    userKey: username
+    passwordKey: password
+  grafana.ini:
+    server:
+      domain: "{{domain}}"
+      #root_url: "%(protocol)s://%(domain)s/"
+      root_url: "http://{{domain}}/grafana/"
+      serve_from_sub_path: true
+  path: /grafana/
+  hosts:
+    - "{{domain}}"
+
+

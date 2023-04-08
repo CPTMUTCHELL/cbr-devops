@@ -1,0 +1,36 @@
+- name: add prometheus
+  kubernetes.core.helm_repository:
+    name: prometheus-community
+    repo_url: "https://prometheus-community.github.io/helm-charts"
+
+- name: install prometheus
+  kubernetes.core.helm:
+    kubeconfig: "{{home}}/.kube/config"
+    name: prometheus
+    chart_ref: prometheus-community/kube-prometheus-stack
+    release_namespace: "{{prometheus.ns}}"
+    state: present
+    create_namespace: true
+    values_files:
+      - "{{manifestCopyFolder}}/prometheus.yml.j2"
+
+
+
+- name: Copy prometheus templates
+  template:
+    dest: "{{manifestCopyFolder}}"
+    src: "{{item}}"
+  with_items:
+    - "{{prometheus.manifests}}"
+
+
+- name: Apply prometheus manifests
+  k8s:
+    kubeconfig: "{{home}}/.kube/config"
+    state: present
+    src: "{{manifestCopyFolder}}/{{item}}"
+  with_items:
+    - prometheus-secret.yml.j2
+    - prometheus-router.yml.j2
+
+

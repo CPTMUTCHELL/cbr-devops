@@ -4,7 +4,7 @@ variable "subdomain" {}
 
 resource "google_compute_instance" "kubernetes-instance" {
   name = "kubernetes-instance"
-  machine_type = "e2-medium"
+  machine_type = "e2-standard-2"
   tags = ["allow-http","allow-https","http-server","https-server","kubernetes-port"]
   boot_disk {
     initialize_params {

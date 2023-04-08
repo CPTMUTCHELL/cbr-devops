@@ -39,9 +39,10 @@ ports:
       certResolver: le
       enabled: true
       domains:
-        - main: cptmutchell.xyz
+        - main: "{{domain}}"
           sans:
-            - cbr.cptmutchell.xyz
+            - "{{subdomain}}"
+            - "{{domain}}"
 
 
 globalArguments: [] # Disable anonymous stat
