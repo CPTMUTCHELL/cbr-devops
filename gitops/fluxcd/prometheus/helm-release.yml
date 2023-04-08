@@ -7,12 +7,10 @@ spec:
   interval: 5m
   chart:
     spec:
-      chart: kube-prometheus-stack
+      reconcileStrategy: Revision
+      chart: charts/kube-prometheus-stack
       sourceRef:
-        kind: HelmRepository
-        name: prometheus-community
+        kind: GitRepository
+        name: prometheus-charts
         namespace: prometheus
-      interval: 1m
-  upgrade:
-    remediation:
-      remediateLastFailure: true
+

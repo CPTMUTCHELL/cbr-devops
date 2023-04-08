@@ -1,0 +1,11 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: prometheus-charts
+  namespace: prometheus
+spec:
+
+  interval: 1m
+  url: https://github.com/prometheus-community/helm-charts
+  ref:
+    branch: master
