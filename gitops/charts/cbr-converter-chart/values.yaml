@@ -3,7 +3,7 @@ deployments:
     ns: cbr
     replicas: 1
     image: cptmutchell/auth-service
-    tag: "master-c3682d4-20230408020916" # {"$imagepolicy": "flux-system:auth-image-policy:tag"}
+    tag: "master-a00f9ed-20230408021324" # {"$imagepolicy": "flux-system:auth-image-policy:tag"}
     port: 8081
     secretEnvs:
       - envName: POSTGRES_PASSWORD
