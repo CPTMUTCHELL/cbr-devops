@@ -13,4 +13,4 @@ spec:
     # exclude all
     /*
     # include charts directory
-    !/charts//kube-prometheus-stack/
+    !/charts/kube-prometheus-stack/
