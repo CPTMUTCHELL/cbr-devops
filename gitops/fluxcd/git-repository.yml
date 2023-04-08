@@ -7,7 +7,7 @@ spec:
   secretRef:
     name: flux-auth
   interval: 1m
-  url: ssh://git@github.com/CPTMUTCHELL/cbr-devops
+  url: ssh://git@github.com/CPTMUTCHELL/devops
   ref:
     branch: master
   ignore: |-
