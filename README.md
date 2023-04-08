@@ -17,7 +17,7 @@ The old version of CI/CD and IAC is available [here](https://github.com/CPTMUTCH
    * k8s_setup role:
       Installs k3s, Helm, It was used to generate a separate kubeconfig for Jenkins, but now it's different approach (gitops) :) 
    * manifest_handler role
-      Applies k8s resources and installs and configures Metallb (Load balancer), Postgres, RabbitMQ, Traefik (reverse-proxy + tls) and Fluxcd
+      Applies k8s resources and installs and configures Metallb (Load balancer), Postgres, RabbitMQ, Traefik (reverse-proxy + tls), Fluxcd, Prometheus
 
 #### Components installed: 
 * Metallb: Used to provide external load balancer to the cluster. It opens the cluster for traffic. 
@@ -25,6 +25,7 @@ The old version of CI/CD and IAC is available [here](https://github.com/CPTMUTCH
 Dashboard is also available. To generate the password use this command: `htpasswd -nb login password | base64` When I had different subdomains for backend and frontend I had this problem [issue link](https://github.com/traefik/traefik/issues/3414). One of the solutions was to scale down and then scale up a frontend service
 * PostgreSQL: Applications inside cluster can access it by its service name
 * RabbitMQ: Dashboard is available. Had to google a lot here :) I used tls from Traefik, but not from rabbitmq chart.
+* Prometheus operator. Allows to monitor the cluster and applications' metrics. Grafana UI is enabled
 
 Please, follow my Ansible tasks and templates folder in manifest_handler. It contains chart values and kubernetes manifests
 
