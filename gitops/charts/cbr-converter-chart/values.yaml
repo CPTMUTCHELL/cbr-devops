@@ -3,7 +3,7 @@ deployments:
     ns: cbr
     replicas: 1
     image: cptmutchell/auth-service
-    tag: "master-a00f9ed-20230408021324" # {"$imagepolicy": "flux-system:auth-image-policy:tag"}
+    tag: "master-a5d7cc8-20230414092742" # {"$imagepolicy": "flux-system:auth-image-policy:tag"}
     port: 8081
     secretEnvs:
       - envName: POSTGRES_PASSWORD
@@ -86,7 +86,7 @@ deployments:
     ns: cbr
     replicas: 1
     image: cptmutchell/cbr-ui
-    tag: "master-bc54971-20230324204157" # {"$imagepolicy": "flux-system:ui-image-policy:tag"}
+    tag: "master-88797ac-20230414092605" # {"$imagepolicy": "flux-system:ui-image-policy:tag"}
     port: 80
     configMaps:
       - cbr-ui-cm
