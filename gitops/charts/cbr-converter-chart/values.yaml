@@ -86,7 +86,7 @@ deployments:
     ns: cbr
     replicas: 1
     image: cptmutchell/cbr-ui
-    tag: "master-88797ac-20230414092605" # {"$imagepolicy": "flux-system:ui-image-policy:tag"}
+    tag: "master-2001ae5-20230414103304" # {"$imagepolicy": "flux-system:ui-image-policy:tag"}
     port: 80
     configMaps:
       - cbr-ui-cm
